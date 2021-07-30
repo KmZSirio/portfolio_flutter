@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:portfolio_flutter/main/ui/widgets/fat_button.dart';
 
-import '../widgets.dart/fat_button.dart';
-
+import 'settings/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
 
       bottomNavigationBar: _navBar(),
 
@@ -32,11 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             index: _stackIndex,
             children: [
 
-              Container(
-                color: Colors.red,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+              SettingsScreen(),
               _homePage(context),
               Container(
                 color: Colors.blue,
