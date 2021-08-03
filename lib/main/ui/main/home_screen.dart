@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portfolio_flutter/main/ui/widgets/fat_button.dart';
+import 'package:portfolio_flutter/main/common_widgets/fat_button.dart';
+import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'settings/settings_screen.dart';
 
@@ -46,39 +48,43 @@ class _HomeScreenState extends State<HomeScreen> {
    );
   }
 
-  BottomNavigationBar _navBar() {
+  Theme _navBar() {
 
-    return BottomNavigationBar(
-      currentIndex: _stackIndex,
-      onTap: (i) {
-        _stackIndex = i;
-        setState(() {});
-      },
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Color(0xff999999),
-      elevation: 0.0,
-      type: BottomNavigationBarType.shifting,
-      items: [
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Theme.of(context).canvasColor,
+      ),
+      child: BottomNavigationBar(
+        backgroundColor: Colors.red,
+        type: BottomNavigationBarType.shifting,
+        currentIndex: _stackIndex,
+        onTap: (i) {
+          _stackIndex = i;
+          setState(() {});
+        },
+        elevation: 0.0,
+        items: [
 
-        BottomNavigationBarItem(
-          icon: Icon( FontAwesomeIcons.cog ),
-          tooltip: "Settings button",
-          label: "Settings"
-        ),
-        
-        BottomNavigationBarItem(
-          icon: Icon( FontAwesomeIcons.home ),
-          tooltip: "Home button",
-          label: "Home"
-        ),
+          BottomNavigationBarItem(
+            icon: Icon( FontAwesomeIcons.cog ),
+            tooltip: "Settings button",
+            label: "Settings"
+          ),
+          
+          BottomNavigationBarItem(
+            icon: Icon( FontAwesomeIcons.home ),
+            tooltip: "Home button",
+            label: "Home"
+          ),
 
-        BottomNavigationBarItem(
-          icon: Icon( FontAwesomeIcons.bookOpen ),
-          tooltip: "About button",
-          label: "About"
-        ),
+          BottomNavigationBarItem(
+            icon: Icon( FontAwesomeIcons.bookOpen ),
+            tooltip: "About button",
+            label: "About"
+          ),
 
-      ],
+        ],
+      ),
     );
   }
 
@@ -120,6 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
         color1: Color(0xff28313B),
         color2: Color(0xff485461),
         onPress: () => Navigator.pushNamed(context, '/rmpercentages')
+      ),
+      FatButton(
+        texto: "Now playing",
+        icon: FontAwesomeIcons.film,
+        color1: Color(0xff000000),
+        color2: Color(0xff801434),
+        onPress: () {
+          Navigator.pushNamed(context, '/tmdb_home');
+        }
       ),
     ];
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_flutter/main/ui/core/app_theme_cubit.dart';
+import 'package:portfolio_flutter/main/core/app_theme_cubit.dart';
 import 'package:portfolio_flutter/main/ui/main/settings/settings_cubit.dart';
-import 'package:portfolio_flutter/main/ui/widgets/fake_appbar.dart';
+import 'package:portfolio_flutter/main/common_widgets/fake_appbar.dart';
 
 
 class SettingsScreen extends StatelessWidget {

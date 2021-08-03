@@ -20,15 +20,15 @@ class PersistentStorageImpl extends PersistentStorageRepository {
   }
 
   @override
-  Future<void> updateLanguage(int language) {
-    // TODO: implement updateLanguage
-    throw UnimplementedError();
+  Future<int> whichLanguage() async {
+    final preference = await SharedPreferences.getInstance();
+    return preference.getInt( _language ) ?? 1;
   }
 
   @override
-  Future<int> whichLanguage() {
-    // TODO: implement whichLanguage
-    throw UnimplementedError();
+  Future<void> updateLanguage(int language) async {
+    final preference = await SharedPreferences.getInstance();
+    await preference.setInt( _language, language );
+    return;
   }
-
 }

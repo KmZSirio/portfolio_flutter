@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portfolio_flutter/main/ui/core/theme.dart';
+import 'package:portfolio_flutter/main/core/theme.dart';
 
 Row fakeAppBar({
   required BuildContext context,

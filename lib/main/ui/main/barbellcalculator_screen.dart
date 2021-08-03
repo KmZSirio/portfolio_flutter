@@ -14,8 +14,6 @@ class _BarbellCalculatorScreenState extends State<BarbellCalculatorScreen> {
   
   List<Widget> _platesOnBar = [];
 
-  //! Pruebasssss
-  // Map<int, Widget> _platesOnBarMap = {};
   int _platesWidth = 0;
   bool _barWithPlates = false;
   var title = "Barbell Calculator";
@@ -27,7 +25,6 @@ class _BarbellCalculatorScreenState extends State<BarbellCalculatorScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
 
       appBar: AppBar(
         title: Text( _barWithPlates ? "${_barWeight}lb   |   ${((_barWeight - 45) / 2).toStringAsFixed(0)} each side" : title ),

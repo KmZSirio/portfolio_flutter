@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:portfolio_flutter/main/tmdb/models/movie.dart';
+
+
+class MovieSlider extends StatefulWidget {
+
+  final List<Movie> movies;
+  final String? title;
+  final Function onNextPage;
+
+  const MovieSlider({ required this.movies,  this.title, required this.onNextPage  });
+
+  @override
+  _MovieSliderState createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() { 
+
+    scrollController.addListener(() {
+
+      if ( scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500 ) {
+        widget.onNextPage();
+      }
+
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      width: double.infinity,
+      height: 262,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          ( widget.title != null ) 
+            ? Container(
+              padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+              child: Text( widget.title!, style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ) ),
+            )
+            : Container(),
+          Expanded(
+            child: ListView.builder(
+              controller: scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.movies.length,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: ( _, int i) => _MoviePoster( widget.movies[i] ),
+            ),
+          )
+
+        ],
+      ),
+    );
+  }
+}
+
+class _MoviePoster extends StatelessWidget {
+
+  final Movie movie;
+
+  
+
+  const _MoviePoster( this.movie );
+
+  @override
+  Widget build(BuildContext context) {
+    movie.heroId = "slider-${ movie.id }";
+
+    return Container(
+      // color: Colors.blueGrey[700],
+      width: 130,
+      margin: EdgeInsets.symmetric( horizontal: 10 ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(  context, '/tmdb_details', arguments: movie ),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  fit: BoxFit.cover,
+                  placeholder: AssetImage( "assets/no-image.jpg" ),
+                  image: NetworkImage( movie.fullPosterImg )
+                ),
+              ),
+            ),
+          ),
+          Text( movie.title, 
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis, 
+          ),
+          
+        ],
+      ),
+    );
+  }
+}
