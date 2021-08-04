@@ -35,15 +35,31 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.white,
     buttonColor: AppColors.dark,
     dividerColor: AppColors.lighterDark,
-    primaryColor: AppColors.darkerYellow,
+    primaryColor: AppColors.sirioG,
     accentColor: AppColors.sirioR,
     cardColor: AppColors.lighterDark,
     errorColor: AppColors.red,
     canvasColor: AppColors.whiteMid,
 
+    colorScheme: ColorScheme(
+      brightness: Brightness.light, 
+      background: AppColors.white, 
+      error: AppColors.red, 
+      onBackground: AppColors.dark, 
+      onError: AppColors.white, 
+      onPrimary: AppColors.white, 
+      onSecondary: AppColors.white, 
+      onSurface: AppColors.darkMid, 
+      primary: AppColors.darkMid, 
+      primaryVariant: AppColors.dark, 
+      secondary: AppColors.whiteMid,
+      secondaryVariant: AppColors.white,
+      surface: AppColors.lighterDark,
+    ),
+
     textTheme: GoogleFonts.ralewayTextTheme().apply(
       displayColor: AppColors.dark,
-      bodyColor: AppColors.white,
+      bodyColor: AppColors.dark,
     ),
 
     textButtonTheme: TextButtonThemeData(
@@ -73,24 +89,44 @@ class AppTheme {
       foregroundColor: Colors.white
     ),
 
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   color
-    // ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all( AppColors.darkerWhite ),
+      trackColor: MaterialStateProperty.all( AppColors.white ),
+    ),
   );
+
+  //* displayColor:  hl1, 2, 3, 4 and caption.
+  //* bodyColor:     remaining
 
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.dark,
     buttonColor: AppColors.white,
     dividerColor: AppColors.darkerWhite,
-    primaryColor: AppColors.yellow,
+    primaryColor: AppColors.sirioG,
     accentColor: AppColors.sirioR,
     cardColor: AppColors.darkerWhite,
     errorColor: AppColors.red,
     canvasColor: AppColors.darkMid,
 
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark, 
+      background: AppColors.white, 
+      error: AppColors.red, 
+      onBackground: AppColors.dark, 
+      onError: AppColors.white, 
+      onPrimary: AppColors.white, 
+      onSecondary: AppColors.white, 
+      onSurface: AppColors.darkMid, 
+      primary: AppColors.darkMid, 
+      primaryVariant: AppColors.dark, 
+      secondary: AppColors.whiteMid,
+      secondaryVariant: AppColors.white,
+      surface: AppColors.whiteMid,
+    ),
+
     textTheme: GoogleFonts.ralewayTextTheme().apply(
       displayColor: AppColors.white,
-      bodyColor: AppColors.dark,
+      bodyColor: AppColors.white,
     ),
 
     textButtonTheme: TextButtonThemeData(
@@ -119,6 +155,11 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.red[700],
       foregroundColor: Colors.white
+    ),
+
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all( AppColors.sirioR ),
+      trackColor: MaterialStateProperty.all( AppColors.sirioR.withOpacity(0.7) ),
     ),
   );
 

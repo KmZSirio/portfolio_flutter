@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_flutter/main/tmdb/models/movie.dart';
 import 'package:portfolio_flutter/main/tmdb/widgets/tmdb_widgets.dart';
 
@@ -20,7 +21,9 @@ class DetailsScreen extends StatelessWidget {
             delegate: SliverChildListDelegate([
 
               _PosterAndTitle( movie ),
+              SizedBox( height: 10 ),
               _Overview( movie ),
+              SizedBox( height: 10 ),
               CastingCards( movie.id ),
 
             ])
@@ -53,7 +56,7 @@ class _CustomAppBar extends StatelessWidget {
           color: Colors.black26,
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.only( bottom: 18 ),
-          child: Text( movie.title, style: TextStyle( fontSize: 16 ), textAlign: TextAlign.center )
+          child: Text( movie.title, style: GoogleFonts.raleway(), textAlign: TextAlign.center )
         ),
         background: FadeInImage(
           placeholder: AssetImage("assets/loading.gif"), 
@@ -102,12 +105,24 @@ class _PosterAndTitle extends StatelessWidget {
 
               ConstrainedBox(
                 constraints: BoxConstraints( maxWidth: size.width - 120 - 40 - 20 ),
-                child: Text( movie.title, style: Theme.of(context).textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2 )
+                child: Text( 
+                  movie.title, 
+                  style: TextStyle( color: Theme.of(context).textTheme.caption!.color, fontSize: 22 ), 
+                  overflow: TextOverflow.ellipsis, 
+                  maxLines: 2 
+                )
               ),
+              SizedBox( height: 7 ),
               ConstrainedBox(
                 constraints: BoxConstraints( maxWidth: size.width - 120 - 40 - 20 ),
-                child: Text( movie.originalTitle, style: Theme.of(context).textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2 )
+                child: Text( 
+                  movie.originalTitle, 
+                  style: TextStyle( color: Theme.of(context).textTheme.caption!.color, fontSize: 18 ), 
+                  overflow: TextOverflow.ellipsis, 
+                  maxLines: 2 
+                )
               ),
+              SizedBox( height: 7 ),
               Row(
                 children: [
 
@@ -139,7 +154,7 @@ class _Overview extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric( horizontal: 30, vertical: 10 ),
       child: Text( movie.overview, 
-        style: Theme.of(context).textTheme.subtitle1,
+        style: TextStyle( color: Theme.of(context).textTheme.caption!.color, fontSize: 15 ),
         textAlign: TextAlign.justify,
       ),
     );

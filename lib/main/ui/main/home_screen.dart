@@ -2,8 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_flutter/main/common_widgets/fat_button.dart';
-import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
-import 'package:provider/provider.dart';
 
 import 'settings/settings_screen.dart';
 

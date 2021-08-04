@@ -12,6 +12,12 @@ class MovieSearchDelegate extends SearchDelegate {
   String get searchFieldLabel => "Search movie";
 
   @override
+  InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
+    focusedBorder: InputBorder.none,
+    enabledBorder: InputBorder.none,
+  );
+
+  @override
   List<Widget> buildActions(BuildContext context) {
 
     return [
@@ -47,10 +53,10 @@ class MovieSearchDelegate extends SearchDelegate {
     return Text( "buildResults" );
   }
 
-  Widget _emptyContainer(){
+  Widget _emptyContainer( BuildContext context ){
     return Container(
       child: Center(
-        child: Icon( Icons.movie_creation_outlined, color: Colors.black38, size: 130 ),
+        child: Icon( Icons.movie_creation_outlined, color: Theme.of(context).primaryColor, size: 130 ),
       ),
     );
   }
@@ -58,7 +64,7 @@ class MovieSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
 
-    if ( query.isEmpty ) return _emptyContainer();
+    if ( query.isEmpty ) return _emptyContainer( context );
 
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
     moviesProvider.getSuggestionsByQuery( query );
@@ -67,7 +73,7 @@ class MovieSearchDelegate extends SearchDelegate {
       stream: moviesProvider.suggestionStream,
       builder: ( _, AsyncSnapshot<List<Movie>> snapshot ) {
 
-        if ( !snapshot.hasData ) return _emptyContainer();
+        if ( !snapshot.hasData ) return _emptyContainer( context );
 
         final movies = snapshot.data!;
 
@@ -101,8 +107,8 @@ class _MovieItem extends StatelessWidget {
           fit: BoxFit.contain,
         ),
       ),
-      title: Text( movie.title ),
-      subtitle: Text( movie.originalTitle ),
+      title: Text( movie.title, style: TextStyle( color: Theme.of(context).buttonColor ) ),
+      subtitle: Text( movie.originalTitle, style: TextStyle( color: Theme.of(context).buttonColor ) ),
       onTap: ( ) => Navigator.pushNamed( context, "/tmdb_details", arguments: movie ),
     );
   }

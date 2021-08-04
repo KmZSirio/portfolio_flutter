@@ -75,7 +75,8 @@ class _CastCard extends StatelessWidget {
             ),
           ),
           SizedBox( height: 4 ),
-          Text( cast.name, 
+          Text( cast.name,
+            style: TextStyle( color: Theme.of(context).textTheme.caption!.color ),
             maxLines: 2, 
             overflow: TextOverflow.ellipsis, 
             textAlign: TextAlign.center,
@@ -84,7 +85,7 @@ class _CastCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 2, 
             textAlign: TextAlign.center,
-            style: TextStyle( color: Colors.red[800] ),
+            style: TextStyle( color: Theme.of(context).primaryColor ),
           )
           
         ]

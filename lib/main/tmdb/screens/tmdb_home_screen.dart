@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
 import 'package:portfolio_flutter/main/tmdb/search/search_delegate.dart';
 import 'package:portfolio_flutter/main/tmdb/widgets/tmdb_widgets.dart';
@@ -14,7 +15,12 @@ class TmdbHomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Peliculas en cines"),
+        leading: Container(),
+        centerTitle: true,
+        title: Text( 
+          "Peliculas en cines", 
+          style: GoogleFonts.raleway( fontWeight: FontWeight.w500 )
+        ),
         elevation: 0,
         actions: [
     

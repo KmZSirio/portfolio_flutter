@@ -49,8 +49,11 @@ class _MovieSliderState extends State<MovieSlider> {
 
           ( widget.title != null ) 
             ? Container(
-              padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-              child: Text( widget.title!, style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ) ),
+              padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+              child: Text( 
+                widget.title!, 
+                style: TextStyle( fontSize: 20, color: Theme.of(context).textTheme.caption!.color ) 
+              ),
             )
             : Container(),
           Expanded(
@@ -104,6 +107,7 @@ class _MoviePoster extends StatelessWidget {
             ),
           ),
           Text( movie.title, 
+            style: TextStyle( color: Theme.of(context).textTheme.caption!.color ),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis, 

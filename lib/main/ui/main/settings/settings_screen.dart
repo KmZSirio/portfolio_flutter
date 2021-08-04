@@ -61,7 +61,8 @@ class SettingsScreen extends StatelessWidget {
             context.read<AppThemeCubit>().updateTheme( value );
           },
           title: Text(
-            "Dark Mode"
+            "Dark Mode",
+            style: TextStyle( color: Theme.of(context).scaffoldBackgroundColor, fontSize: 18 ),
           ),
         );
       }),
