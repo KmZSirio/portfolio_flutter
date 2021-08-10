@@ -7,8 +7,9 @@ class MovieSlider extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
   final Function onNextPage;
+  final int randomNumber;
 
-  const MovieSlider({ required this.movies,  this.title, required this.onNextPage  });
+  const MovieSlider({ required this.movies, this.title, required this.onNextPage, required this.randomNumber });
 
   @override
   _MovieSliderState createState() => _MovieSliderState();
@@ -62,7 +63,7 @@ class _MovieSliderState extends State<MovieSlider> {
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,
               physics: BouncingScrollPhysics(),
-              itemBuilder: ( _, int i) => _MoviePoster( widget.movies[i] ),
+              itemBuilder: ( _, int i) => _MoviePoster( widget.movies[i], widget.randomNumber ),
             ),
           )
 
@@ -75,14 +76,13 @@ class _MovieSliderState extends State<MovieSlider> {
 class _MoviePoster extends StatelessWidget {
 
   final Movie movie;
+  final int randomNumber;
 
-  
-
-  const _MoviePoster( this.movie );
+  const _MoviePoster( this.movie, this.randomNumber );
 
   @override
   Widget build(BuildContext context) {
-    movie.heroId = "slider-${ movie.id }";
+    movie.heroId = "slider-${ movie.id }-$randomNumber";
 
     return Container(
       // color: Colors.blueGrey[700],

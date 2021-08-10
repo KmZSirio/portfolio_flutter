@@ -1,10 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_flutter/main/tmdb/models/movie.dart';
+import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
 import 'package:portfolio_flutter/main/tmdb/widgets/tmdb_widgets.dart';
+import 'package:provider/provider.dart';
 
 
 class DetailsScreen extends StatelessWidget {
+  
+  final Random random = new Random();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,8 @@ class DetailsScreen extends StatelessWidget {
               SizedBox( height: 10 ),
               _Overview( movie ),
               SizedBox( height: 10 ),
-              CastingCards( movie.id ),
+              _FutureSimilar( movie, random ),
+              CastingCards( movieId: movie.id, title: "Reparto" ),
 
             ])
           )
@@ -32,6 +39,52 @@ class DetailsScreen extends StatelessWidget {
         ],
       )
    );
+  }
+}
+
+class _FutureSimilar extends StatefulWidget {
+
+  final Movie movie;
+  final Random random;
+
+  _FutureSimilar( this.movie, this.random );
+
+  @override
+  __FutureSimilarState createState() => __FutureSimilarState();
+}
+
+class __FutureSimilarState extends State<_FutureSimilar> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    final moviesProvider = Provider.of<MoviesProvider>( context, listen: false );
+
+    return FutureBuilder(
+      future: moviesProvider.getSimilar( widget.movie.id ),
+      builder: ( _, AsyncSnapshot<List<Movie>> snapshot ) {
+
+        if ( !snapshot.hasData) {
+          return Container(
+            margin: EdgeInsets.only( bottom: 30 ),
+            width: double.infinity,
+            height: 180,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Color(0xff801434),
+              ),
+            ),
+          );
+        }
+
+        return MovieSlider( 
+          movies: snapshot.data!, 
+          title: "Similares",
+          randomNumber: widget.random.nextInt(10000),
+          onNextPage: () {}
+        );
+      },
+    );
   }
 }
 
@@ -45,7 +98,7 @@ class _CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return SliverAppBar(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Theme.of(context).primaryColor,
       expandedHeight: 200,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
@@ -121,6 +174,13 @@ class _PosterAndTitle extends StatelessWidget {
                   overflow: TextOverflow.ellipsis, 
                   maxLines: 2 
                 )
+              ),
+              SizedBox( height: 7 ),
+              Text( 
+                "${ movie.releaseDate }", 
+                style: TextStyle( color: Theme.of(context).textTheme.caption!.color, fontSize: 18 ), 
+                overflow: TextOverflow.ellipsis, 
+                maxLines: 2 
               ),
               SizedBox( height: 7 ),
               Row(

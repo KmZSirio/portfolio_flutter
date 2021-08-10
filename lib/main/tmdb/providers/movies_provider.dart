@@ -7,6 +7,8 @@ import 'package:portfolio_flutter/main/tmdb/models/tmdb_models.dart';
 
 class MoviesProvider extends ChangeNotifier {
 
+  // TODO Debouncer para populares!!
+
   String _baseUrl  = "api.themoviedb.org";
   String _apiKey   = "db4d552faaf3edb57d6b03f0afe1e549";
   String _language = "es-ES";
@@ -15,6 +17,7 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> popularMovies   = [];
 
   Map<int, List<Cast>> moviesCast = {};
+  Map<int, List<Movie>> similarMovies = {};
 
   int _popularPage = 0;
 
@@ -52,7 +55,6 @@ class MoviesProvider extends ChangeNotifier {
 
   getPopular() async {
     _popularPage++;
-    print( "Pidiendo populares" );
 
     final jsonData = await _getJsonData( "/3/movie/popular", _popularPage );
     final popularResponse = PopularResponse.fromJson( jsonData );
@@ -98,5 +100,16 @@ class MoviesProvider extends ChangeNotifier {
     });
 
     Future.delayed( Duration( milliseconds: 301 ) ).then(( _ ) => timer.cancel());
+  }
+
+  Future<List<Movie>> getSimilar( int movieId ) async {
+
+    if ( similarMovies.containsKey( movieId ) ) return similarMovies[movieId]!;
+
+    final jsonData = await _getJsonData( "/3/movie/$movieId/similar" );
+    final similarResponse = PopularResponse.fromJson( jsonData );
+
+    similarMovies[movieId] = similarResponse.results;
+    return similarResponse.results;
   }
 }

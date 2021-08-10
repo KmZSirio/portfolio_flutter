@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 class CastingCards extends StatelessWidget {
 
   final int movieId;
+  final String? title;
 
-  const CastingCards( this.movieId );
+  const CastingCards({ required this.movieId, this.title });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CastingCards extends StatelessWidget {
 
     return FutureBuilder(
       future: moviesProvider.getMovieCast( movieId ),
-      builder: ( _, AsyncSnapshot<List<Cast>> snapshot) {
+      builder: ( _, AsyncSnapshot<List<Cast>> snapshot ) {
 
         if ( !snapshot.hasData) {
           return Container(
@@ -37,12 +38,29 @@ class CastingCards extends StatelessWidget {
         return Container(
           margin: EdgeInsets.only( bottom: 30 ),
           width: double.infinity,
-          height: 208,
-          child: ListView.builder(
-            itemCount: cast.length,
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            itemBuilder: ( _, int index ) => _CastCard( cast[index] ),
+          height: 241,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              ( title != null ) 
+                ? Container(
+                  padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                  child: Text( 
+                    title!, 
+                    style: TextStyle( fontSize: 20, color: Theme.of(context).textTheme.caption!.color ) 
+                  ),
+                )
+                : Container(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cast.length,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: ( _, int index ) => _CastCard( cast[index] ),
+                ),
+              ),
+            ],
           ),
         );
       },
