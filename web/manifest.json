@@ -1,6 +1,6 @@
 {
-    "name": "portfolio_flutter",
-    "short_name": "portfolio_flutter",
+    "name": "sirio_portfolio",
+    "short_name": "sirio_portfolio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

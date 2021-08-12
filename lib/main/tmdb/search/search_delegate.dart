@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_flutter/main/tmdb/models/movie.dart';
-import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
+import 'package:sirio_portfolio/main/tmdb/models/movie.dart';
+import 'package:sirio_portfolio/main/tmdb/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class MovieSearchDelegate extends SearchDelegate {

@@ -1,4 +1,4 @@
-package com.bustasirio.portfolio_flutter
+package com.bustasirio.sirio_portfolio
 
 import io.flutter.embedding.android.FlutterActivity
 

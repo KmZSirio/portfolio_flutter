@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portfolio_flutter/main/common_widgets/fat_button.dart';
+import 'package:sirio_portfolio/main/common_widgets/fat_button.dart';
+import 'package:sirio_portfolio/main/core/theme.dart';
 
 import 'settings/settings_screen.dart';
 
@@ -132,6 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
         color2: Color(0xff801434),
         onPress: () {
           Navigator.pushNamed(context, '/tmdb_home');
+        }
+      ),
+      FatButton(
+        texto: "Spotify API",
+        icon: FontAwesomeIcons.spotify,
+        color1: AppColors.spotifyBlack,
+        color2: AppColors.spotifyGreen,
+        onPress: () {
+          Navigator.pushNamed(context, '/spotify_home');
         }
       ),
     ];

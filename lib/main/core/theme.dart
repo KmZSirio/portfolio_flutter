@@ -24,6 +24,9 @@ class AppColors {
   static final sirioR = Color(0xff801434);
   static final sirioY = Color(0xffF3AC20);
   static final sirioG = Color(0xff94923D);
+
+  static final spotifyGreen = Color(0xff1DB954);
+  static final spotifyBlack = Color(0xff191414);
 }
 
 class AppTheme {

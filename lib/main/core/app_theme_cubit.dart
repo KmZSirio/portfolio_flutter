@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_flutter/main/data/persistent_storage_repository.dart';
+import 'package:sirio_portfolio/main/data/persistent_storage_repository.dart';
 
 class AppThemeCubit extends Cubit<bool> {
   AppThemeCubit( this._persistentStorageRepository ) : super(false);

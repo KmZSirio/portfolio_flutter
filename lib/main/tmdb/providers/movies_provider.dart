@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:portfolio_flutter/main/helpers/debouncer.dart';
-import 'package:portfolio_flutter/main/tmdb/models/tmdb_models.dart';
+import 'package:sirio_portfolio/main/helpers/debouncer.dart';
+import 'package:sirio_portfolio/main/tmdb/models/tmdb_models.dart';
 
 class MoviesProvider extends ChangeNotifier {
 

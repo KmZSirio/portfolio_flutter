@@ -1,4 +1,4 @@
-import 'package:portfolio_flutter/main/data/persistent_storage_repository.dart';
+import 'package:sirio_portfolio/main/data/persistent_storage_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _isDarkMode = "isDarkMode";

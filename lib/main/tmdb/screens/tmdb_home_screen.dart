@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
-import 'package:portfolio_flutter/main/tmdb/search/search_delegate.dart';
-import 'package:portfolio_flutter/main/tmdb/widgets/tmdb_widgets.dart';
+import 'package:sirio_portfolio/main/tmdb/providers/movies_provider.dart';
+import 'package:sirio_portfolio/main/tmdb/search/search_delegate.dart';
+import 'package:sirio_portfolio/main/tmdb/widgets/tmdb_widgets.dart';
 import 'package:provider/provider.dart';
 
 

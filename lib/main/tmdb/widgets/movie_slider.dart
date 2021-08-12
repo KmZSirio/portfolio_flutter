@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_flutter/main/tmdb/models/movie.dart';
+import 'package:sirio_portfolio/main/tmdb/models/movie.dart';
 
 
 class MovieSlider extends StatefulWidget {

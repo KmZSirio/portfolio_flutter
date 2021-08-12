@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio_flutter/main/data/persistent_storage_repository.dart';
+import 'package:sirio_portfolio/main/data/persistent_storage_repository.dart';
 
 class L10nCubit extends Cubit<int> {
   L10nCubit( this._persistentStorageRepository ) : super(0);

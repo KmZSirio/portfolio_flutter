@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:portfolio_flutter/main/tmdb/models/credits_response.dart';
-import 'package:portfolio_flutter/main/tmdb/providers/movies_provider.dart';
+import 'package:sirio_portfolio/main/tmdb/models/credits_response.dart';
+import 'package:sirio_portfolio/main/tmdb/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class CastingCards extends StatelessWidget {
