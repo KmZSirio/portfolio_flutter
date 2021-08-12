@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color1: AppColors.spotifyBlack,
         color2: AppColors.spotifyGreen,
         onPress: () {
-          Navigator.pushNamed(context, '/spotify_home');
+          Navigator.pushNamed(context, '/spotify_splash');
         }
       ),
     ];

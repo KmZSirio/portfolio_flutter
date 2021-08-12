@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sirio_portfolio/main/tmdb/screens/details_screen.dart';
-import 'package:sirio_portfolio/main/tmdb/screens/tmdb_home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'dependencies.dart';
@@ -11,8 +9,10 @@ import 'main/core/app_theme_cubit.dart';
 import 'main/core/l10n/l10n.dart';
 import 'main/core/l10n/l10n_cubit.dart';
 import 'main/core/theme.dart';
-import 'main/spotify/screens/spotify_home_screen.dart';
+import 'main/spotify/screens/spotify_screens.dart';
 import 'main/tmdb/providers/movies_provider.dart';
+import 'main/tmdb/screens/details_screen.dart';
+import 'main/tmdb/screens/tmdb_home_screen.dart';
 import 'main/ui/main/screens.dart';
  
 void main() async {
@@ -58,13 +58,15 @@ class MyApp extends StatelessWidget {
                   title: 'Portfolio',
                   initialRoute: '/home',
                   routes: {
-                    '/home'         : (_) => HomeScreen(),
-                    '/roundcounter' : (_) => RoundCounterScreen(),
+                    '/home'          : (_) => HomeScreen(),
+                    '/roundcounter'  : (_) => RoundCounterScreen(),
                     '/barbellcalculator': (_) => BarbellCalculatorScreen(),
-                    '/rmpercentages': (_) => RMPercentagesScreen(),
-                    '/tmdb_home'    : (_) => TmdbHomeScreen(),
-                    '/tmdb_details' : (_) => DetailsScreen(),
-                    '/spotify_home' : (_) => SpotifyHomeScreen(),
+                    '/rmpercentages' : (_) => RMPercentagesScreen(),
+                    '/tmdb_home'     : (_) => TmdbHomeScreen(),
+                    '/tmdb_details'  : (_) => DetailsScreen(),
+                    '/spotify_home'  : (_) => SpotifyHomeScreen(),
+                    '/spotify_splash': (_) => SpotifySplashScreen(),
+                    '/spotify_login' : (_) => SpotifyLoginScreen(),
                   },
                   supportedLocales: L10n.all,
                   locale: (snapshotLanguage == 1) 
