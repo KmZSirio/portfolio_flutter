@@ -37,7 +37,7 @@ class SpotifyLoginScreen extends StatelessWidget {
                 width: double.infinity,
                 height: size.height * 0.7,
                 padding: const EdgeInsets.symmetric( horizontal: 35, vertical: 15 ),
-                child: _column(size, _text, _greenButton, _buttonsDeco, _blackButton),
+                child: _column(size, _text, _greenButton, _buttonsDeco, _blackButton, context),
               ),
             )
 
@@ -47,7 +47,7 @@ class SpotifyLoginScreen extends StatelessWidget {
     );
   }
 
-  Column _column(Size size, TextStyle _text, TextStyle _greenButton, BoxDecoration _buttonsDeco, TextStyle _blackButton) {
+  Column _column(Size size, TextStyle _text, TextStyle _greenButton, BoxDecoration _buttonsDeco, TextStyle _blackButton, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,7 +97,7 @@ class SpotifyLoginScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: Text( "Log in", style: _blackButton )
           ),
-          onTap: () {},
+          onTap: () => Navigator.pushNamed( context, "/spotify_wait" ),
         ),
 
       ]

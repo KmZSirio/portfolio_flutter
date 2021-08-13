@@ -65,8 +65,9 @@ class MyApp extends StatelessWidget {
                     '/tmdb_home'     : (_) => TmdbHomeScreen(),
                     '/tmdb_details'  : (_) => DetailsScreen(),
                     '/spotify_home'  : (_) => SpotifyHomeScreen(),
-                    '/spotify_splash': (_) => SpotifySplashScreen(),
                     '/spotify_login' : (_) => SpotifyLoginScreen(),
+                    '/spotify_splash': (_) => SpotifySplashScreen(),
+                    '/spotify_wait'  : (_) => SpotifyWaitScreen(),
                   },
                   supportedLocales: L10n.all,
                   locale: (snapshotLanguage == 1) 
