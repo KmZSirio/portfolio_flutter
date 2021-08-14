@@ -8,7 +8,7 @@ class AppColors {
   static final whiteMid = Color(0xFFf2f2f2);
   static final darkerWhite = Color(0xFFdadada);
 
-  static final dark   = Color(0xFF262626);
+  static final dark    = Color(0xFF262626);
   static final darkMid = Color(0xFF3b3b3b);
   static final lighterDark = Color(0xFF96939b);
 
@@ -21,12 +21,15 @@ class AppColors {
   static final trans = Colors.transparent;
 
   static final faGreen = Color(0xFF088a08);
-  static final sirioR = Color(0xff801434);
-  static final sirioY = Color(0xffF3AC20);
-  static final sirioG = Color(0xff94923D);
+  static final sirioR  = Color(0xff801434);
+  static final sirioY  = Color(0xffF3AC20);
+  static final sirioG  = Color(0xff94923D);
 
   static final spotifyGreen = Color(0xff1ED760);
   static final spotifyBlack = Color(0xff121212);
+  static final spotifyGreyDarker  = Color(0xff2A2A2A);
+  static final spotifyGreyLighter = Color(0xffAFAFAF);
+  static final spotifyBlueGrey = Color(0xff506173);
 }
 
 class AppTheme {

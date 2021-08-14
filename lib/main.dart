@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.black
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: Colors.transparent
+    // ));
 
     return MultiRepositoryProvider(
       providers: buildRepositories(),
@@ -56,6 +56,7 @@ class MyApp extends StatelessWidget {
                 child: MaterialApp(
                   theme: snapshotTheme ? AppTheme.darkTheme : AppTheme.lightTheme,
                   title: 'Portfolio',
+                  // initialRoute: '/home',
                   initialRoute: '/home',
                   routes: {
                     '/home'          : (_) => HomeScreen(),
