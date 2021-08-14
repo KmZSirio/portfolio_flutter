@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
                 child: MaterialApp(
                   theme: snapshotTheme ? AppTheme.darkTheme : AppTheme.lightTheme,
                   title: 'Portfolio',
-                  // initialRoute: '/home',
                   initialRoute: '/home',
+                  // initialRoute: '/spotify_splash',
                   routes: {
                     '/home'          : (_) => HomeScreen(),
                     '/roundcounter'  : (_) => RoundCounterScreen(),

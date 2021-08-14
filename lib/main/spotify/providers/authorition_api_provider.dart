@@ -1,16 +1,17 @@
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:http/http.dart' show Client;
-import 'package:sirio_portfolio/main/core/const.dart';
+
+import '../../core/const.dart';
 
 class AuthorizationApiProvider {
   Client client = Client();
 
-  static String endpoint = "/authorize";
+  static String _endpoint = "/authorize";
   static String responseType = "code";
   static String scope = "playlist-read-private playlist-read-collaborative";
 
   String url = 
-      "https://$accountsUrlSpotify$endpoint" +
+      "https://$accountsUrlSpotify$_endpoint" +
       "?client_id=$clientIdSpotify" +
       "&response_type=$responseType" +
       "&redirect_uri=$redirectUri" +
