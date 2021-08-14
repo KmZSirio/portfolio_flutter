@@ -46,24 +46,27 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
     return Stack(
       children: [
 
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 150,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [
-                  0.0,
-                  1.0
-                ],
-                colors: [
-                  AppColors.trans,
-                  Colors.black
-                ]
-              )
+        IgnorePointer(
+          ignoring: true,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 150,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [
+                    0.0,
+                    1.0
+                  ],
+                  colors: [
+                    AppColors.trans,
+                    Colors.black
+                  ]
+                )
+              ),
             ),
           ),
         ),
