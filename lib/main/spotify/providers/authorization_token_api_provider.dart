@@ -26,11 +26,11 @@ class AuthorizationTokenApiProvider {
         headers: { "Authorization": _authorizationBasic }
       );
 
-      if ( response.statusCode == 200 ) {
+      if ( response.statusCode == 200 ) 
         return AuthorizationModel.fromJson(json.decode(response.body));
-      } else {
+      else 
         return Future.error(response.statusCode);
-      }
+      
     } catch (e) {
       return Future.error(e);
     }

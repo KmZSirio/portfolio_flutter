@@ -41,6 +41,8 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
     );
   }
 
+  SizedBox _width20() => SizedBox(width: 20);
+
   Widget _navBar() {
 
     return Stack(
@@ -132,24 +134,49 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
           SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 30),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                 
-                  Text( "Good afternoon", style: _titleStyle ),
+                  Row(
+                    children: [
+                      _width20(),
+                      Text( "Good afternoon", style: _titleStyle ),
+                    ]
+                  ),
                   SizedBox(height: 25),
-                  _rowsAndColumn(size),
+                  Row(
+                    children: [
+                      _width20(),
+                      _rowsAndColumn(size),
+                    ]
+                  ),
                   SizedBox(height: 35),
-                  Text( "Show you might like", style: _titleStyle ),
+                  Row(
+                    children: [
+                      _width20(),
+                      Text( "Show you might like", style: _titleStyle ),
+                    ]
+                  ),
                   SizedBox(height: 25),
                   _slide( _slidePodcastItem() ),
                   SizedBox(height: 35),
-                  Text( "Uniquely yours", style: _titleStyle ),
+                  Row(
+                    children: [
+                      _width20(),
+                      Text( "Uniquely yours", style: _titleStyle ),
+                    ]
+                  ),
                   SizedBox(height: 25),
                   _slide( _slideYoursItem() ),
                   SizedBox(height: 35),
-                  Text( "Recently played", style: _titleStyle ),
+                  Row(
+                    children: [
+                      _width20(),
+                      Text( "Recently played", style: _titleStyle ),
+                    ]
+                  ),
                   SizedBox(height: 25),
                   _slide( _slideRecentlyItem() ),
                 
@@ -170,7 +197,8 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-      
+            
+            _width20(),
             item,
             SizedBox(width: 20),
             item,

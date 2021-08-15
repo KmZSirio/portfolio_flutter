@@ -3,8 +3,7 @@ import 'package:sirio_portfolio/main/spotify/models/authorization_model.dart';
 import 'package:sirio_portfolio/main/spotify/providers/repository.dart';
 
 class AuthorizationBloc {
-  final _repository = RepositoryAuthorization();
-
+  final _repository = AuthorizationRepository();
   
   final PublishSubject<String> _authorizationCodeFetcher = PublishSubject();
   final PublishSubject<AuthorizationModel> _authorizationTokenFetcher = PublishSubject();
@@ -30,15 +29,9 @@ class AuthorizationBloc {
     }
   }
 
-  disposeCode() {
-    _authorizationCodeFetcher.close();
-  }
+  disposeCode() => _authorizationCodeFetcher.close();
 
-  disposeToken() {
-    _authorizationTokenFetcher.close();
-  }
-
-
+  disposeToken() => _authorizationTokenFetcher.close();
 }
 
 final AuthorizationBloc authorizationBloc = AuthorizationBloc();

@@ -29,7 +29,7 @@ class AppColors {
   static final spotifyBlack = Color(0xff121212);
   static final spotifyGreyDarker  = Color(0xff2A2A2A);
   static final spotifyGreyLighter = Color(0xffAFAFAF);
-  static final spotifyBlueGrey = Color(0xff506173);
+  static final spotifyBlue  = Color(0xff305D94);
 }
 
 class AppTheme {
