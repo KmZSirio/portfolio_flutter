@@ -6,16 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/const.dart';
 import '../models/authorization_model.dart';
-import '../models/playlist_list_response.dart';
+import '../models/playlist_items_response.dart';
 
-class PlaylistListApiProvider {
+class PlaylistItemsApiProvider {
   Client client = Client();
 
-  //TODO Check out, 
-  //! there was an 401 error first call on the morning
-  //! had to log again | renew token maybe
-
-  Future<PlaylistListResponse> fetchPlaylistList() async {
+  Future<PlaylistItemsResponse> fetchPlaylistItems(String url, String endpoint) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String accessToken = prefs.getString("spotify_access_token")!;
@@ -24,13 +20,13 @@ class PlaylistListApiProvider {
       String authorizationWithToken = "$tokenType $accessToken";
 
       final response = await client
-        .get( Uri.https( apiUrlSpotify, "/v1/me/playlists" ),
+        .get( Uri.https(url, endpoint),
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization": authorizationWithToken,
           });
-
+      
       if (response.statusCode == 401) {
         String refreshToken = prefs.getString("spotify_refresh_token")!;
         String _authorizationString = "$clientIdSpotify:$clientSecretSpotify";
@@ -62,20 +58,24 @@ class PlaylistListApiProvider {
           String authorizationWithToken = "${authModel.tokenType} ${authModel.accessToken}";
 
           final response = await client
-            .get( Uri.https( apiUrlSpotify, "/v1/me/playlists" ),
-              headers: {"Authorization": authorizationWithToken} );
-                    
-          return PlaylistListResponse.fromJson(json.decode(response.body));
+            .get( Uri.https(url, endpoint),
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": authorizationWithToken,
+              });
+          
+          return PlaylistItemsResponse.fromJson(json.decode(response.body));
         } else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool("spotify_logged", false);
           return Future.error(response.statusCode);
         }
-      } else if (response.statusCode == 200) 
-        return PlaylistListResponse.fromJson(json.decode(response.body));
-      else 
+      } else if (response.statusCode == 200)
+        return PlaylistItemsResponse.fromJson(json.decode(response.body));
+      else
         return Future.error(response.statusCode);
-      
+        
     } catch (e) {
       return Future.error(e);
     }

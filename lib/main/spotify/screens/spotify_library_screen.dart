@@ -83,55 +83,65 @@ class _SpotifyLibraryScreenState extends State<SpotifyLibraryScreen> {
       padding: EdgeInsets.only( top: 120, bottom: 70 ),
       itemBuilder: ( context, int index ) {
     
-      return Container(
-        width: double.infinity,
-        height: 65,
-        margin: const EdgeInsets.only( top: 15 ),
-        padding: const EdgeInsets.only( left: 20),
-        child: Row(
-          children: [
-            
-            Image(
-              image: NetworkImage(
-                list.items[index].images.length > 0
-                  ? list.items[index].images[0].url
-                  : "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg"
-              ),
-              height: 65,
-              width: 65,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  
-                  Text(
-                    "${list.items[index].name}", 
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: _titlePlaylist
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    ( list.items[index].type == "playlist" ) 
-                      ? "Playlist • ${list.items[index].owner.displayName}"
-                      : "${list.items[index].type} • ${list.items[index].owner.displayName}", 
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: _subtitlePlaylist
-                  ),
-            
-                ]
-              ),
-            )
-
-          ]
-        ),
-      );
+        return GestureDetector(
+          onTap: (){
+            // print(list.items[index].tracks.href);
+            Navigator.pushNamed(context, "/spotify_playlist");
+          },
+          child: _playlistItem(list, index)
+        );
       },
+    );
+  }
+
+  Container _playlistItem(PlaylistListResponse list, int index) {
+    return Container(
+      width: double.infinity,
+      height: 65,
+      margin: const EdgeInsets.only( top: 15 ),
+      padding: const EdgeInsets.only( left: 20),
+      child: Row(
+        children: [
+          
+          Image(
+            image: NetworkImage(
+              list.items[index].images.length > 0
+                ? list.items[index].images[0].url
+                : "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg"
+            ),
+            height: 65,
+            width: 65,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Text(
+                  "${list.items[index].name}", 
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: _titlePlaylist
+                ),
+                SizedBox(height: 5),
+                Text(
+                  ( list.items[index].type == "playlist" ) 
+                    ? "Playlist • ${list.items[index].owner.displayName}"
+                    : "${list.items[index].type} • ${list.items[index].owner.displayName}", 
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: _subtitlePlaylist
+                ),
+          
+              ]
+            ),
+          )
+
+        ]
+      ),
     );
   }
 

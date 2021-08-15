@@ -1,9 +1,3 @@
-// To parse this JSON data, do
-//
-//     final playlistResponse = playlistResponseFromMap(jsonString);
-
-import 'dart:convert';
-
 class PlaylistListResponse {
     PlaylistListResponse({
         required this.href,
@@ -23,20 +17,9 @@ class PlaylistListResponse {
     dynamic previous;
     int total;
 
-    // factory PlaylistListResponse.fromJson(String str) => PlaylistListResponse.fromMap(json.decode(str));
     factory PlaylistListResponse.fromJson(Map<String, dynamic> json) => PlaylistListResponse(
         href: json["href"],
-        items: List<Playlist>.from(json["items"].map((x) => Playlist.fromMap(x))),
-        limit: json["limit"],
-        next: json["next"],
-        offset: json["offset"],
-        previous: json["previous"],
-        total: json["total"],
-    );
-
-    factory PlaylistListResponse.fromMap(Map<String, dynamic> json) => PlaylistListResponse(
-        href: json["href"],
-        items: List<Playlist>.from(json["items"].map((x) => Playlist.fromMap(x))),
+        items: List<Playlist>.from(json["items"].map((x) => Playlist.fromJson(x))),
         limit: json["limit"],
         next: json["next"],
         offset: json["offset"],
@@ -78,8 +61,6 @@ class Playlist {
     String type;
     String uri;
 
-    // factory Playlist.fromJson(String str) => Playlist.fromMap(json.decode(str));
-
     factory Playlist.fromJson(Map<String, dynamic> json) => Playlist(
       collaborative: json["collaborative"],
       description: json["description"],
@@ -95,23 +76,6 @@ class Playlist {
       type: json["type"],
       uri: json["uri"],
     );
-
-    factory Playlist.fromMap(Map<String, dynamic> json) => Playlist(
-        collaborative: json["collaborative"],
-        description: json["description"],
-        externalUrls: ExternalUrls.fromMap(json["external_urls"]),
-        href: json["href"],
-        id: json["id"],
-        images: List<ImageItem>.from(json["images"].map((x) => ImageItem.fromMap(x))),
-        name: json["name"],
-        owner: Owner.fromMap(json["owner"]),
-        primaryColor: json["primary_color"],
-        public: json["public"],
-        snapshotId: json["snapshot_id"],
-        tracks: Tracks.fromMap(json["tracks"]),
-        type: json["type"],
-        uri: json["uri"],
-    );
 }
 
 class ExternalUrls {
@@ -121,14 +85,8 @@ class ExternalUrls {
 
     String spotify;
 
-    // factory ExternalUrls.fromJson(String str) => ExternalUrls.fromMap(json.decode(str));
-
     factory ExternalUrls.fromJson(Map<String, dynamic> json) => ExternalUrls(
       spotify: json["spotify"],
-    );
-
-    factory ExternalUrls.fromMap(Map<String, dynamic> json) => ExternalUrls(
-        spotify: json["spotify"],
     );
 }
 
@@ -143,18 +101,10 @@ class ImageItem {
     String url;
     dynamic width;
 
-    // factory ImageItem.fromJson(String str) => ImageItem.fromMap(json.decode(str));
-
     factory ImageItem.fromJson(Map<String, dynamic> json) => ImageItem(
       height: json["height"],
       url: json["url"],
       width: json["width"],
-    );
-
-    factory ImageItem.fromMap(Map<String, dynamic> json) => ImageItem(
-        height: json["height"],
-        url: json["url"],
-        width: json["width"],
     );
 }
 
@@ -175,8 +125,6 @@ class Owner {
     String type;
     String uri;
 
-    // factory Owner.fromJson(String str) => Owner.fromMap(json.decode(str));
-
     factory Owner.fromJson(Map<String, dynamic> json) => Owner(
       displayName: json["display_name"],
       externalUrls: ExternalUrls.fromJson(json["external_urls"]),
@@ -184,15 +132,6 @@ class Owner {
       id: json["id"],
       type: json["type"],
       uri: json["uri"],
-    );
-
-    factory Owner.fromMap(Map<String, dynamic> json) => Owner(
-        displayName: json["display_name"],
-        externalUrls: ExternalUrls.fromMap(json["external_urls"]),
-        href: json["href"],
-        id: json["id"],
-        type: json["type"],
-        uri: json["uri"],
     );
 }
 
@@ -205,15 +144,8 @@ class Tracks {
     String href;
     int total;
 
-    // factory Tracks.fromJson(String str) => Tracks.fromMap(json.decode(str));
-
     factory Tracks.fromJson(Map<String, dynamic> json) => Tracks(
       href: json["href"],
       total: json["total"],
-    );
-
-    factory Tracks.fromMap(Map<String, dynamic> json) => Tracks(
-        href: json["href"],
-        total: json["total"],
     );
 }
