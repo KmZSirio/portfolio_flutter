@@ -3,27 +3,21 @@ class PlaylistItemsResponse {
         required this.href,
         required this.items,
         required this.limit,
-        this.next,
         required this.offset,
-        this.previous,
         required this.total,
     });
 
     String href;
     List<Item> items;
     int limit;
-    dynamic next;
     int offset;
-    dynamic previous;
     int total;
 
     factory PlaylistItemsResponse.fromJson(Map<String, dynamic> json) => PlaylistItemsResponse(
         href: json["href"],
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         limit: json["limit"],
-        next: json["next"],
         offset: json["offset"],
-        previous: json["previous"],
         total: json["total"],
     );
 }
@@ -33,25 +27,19 @@ class Item {
         required this.addedAt,
         required this.addedBy,
         required this.isLocal,
-        this.primaryColor,
         required this.track,
-        required this.videoThumbnail,
     });
 
     DateTime addedAt;
     AddedBy addedBy;
     bool isLocal;
-    dynamic primaryColor;
     Track track;
-    VideoThumbnail videoThumbnail;
 
     factory Item.fromJson(Map<String, dynamic> json) => Item(
         addedAt: DateTime.parse(json["added_at"]),
         addedBy: AddedBy.fromJson(json["added_by"]),
         isLocal: json["is_local"],
-        primaryColor: json["primary_color"],
         track: Track.fromJson(json["track"]),
-        videoThumbnail: VideoThumbnail.fromJson(json["video_thumbnail"]),
     );
 }
 
@@ -62,7 +50,6 @@ class AddedBy {
         required this.id,
         required this.type,
         required this.uri,
-        required this.name,
     });
 
     ExternalUrls externalUrls;
@@ -70,7 +57,6 @@ class AddedBy {
     String id;
     String type;
     String uri;
-    String name;
 
     factory AddedBy.fromJson(Map<String, dynamic> json) => AddedBy(
         externalUrls: ExternalUrls.fromJson(json["external_urls"]),
@@ -78,7 +64,6 @@ class AddedBy {
         id: json["id"],
         type: json["type"],
         uri: json["uri"],
-        name: json["name"] == null ? null : json["name"],
     );
 }
 
@@ -91,6 +76,33 @@ class ExternalUrls {
 
     factory ExternalUrls.fromJson(Map<String, dynamic> json) => ExternalUrls(
         spotify: json["spotify"],
+    );
+}
+
+class Artist {
+    Artist({
+        required this.externalUrls,
+        required this.href,
+        required this.id,
+        required this.name,
+        required this.type,
+        required this.uri,
+    });
+
+    ExternalUrls externalUrls;
+    String href;
+    String id;
+    String name;
+    String type;
+    String uri;
+
+    factory Artist.fromJson(Map<String, dynamic> json) => Artist(
+        externalUrls: ExternalUrls.fromJson(json["external_urls"]),
+        href: json["href"],
+        id: json["id"],
+        name: json["name"],
+        type: json["type"],
+        uri: json["uri"],
     );
 }
 
@@ -107,10 +119,9 @@ class Track {
         required this.href,
         required this.id,
         required this.isLocal,
-        required this.isPlayable,
         required this.name,
         required this.popularity,
-        required this.previewUrl,
+        this.previewUrl,
         required this.track,
         required this.trackNumber,
         required this.type,
@@ -118,7 +129,7 @@ class Track {
     });
 
     Album album;
-    List<AddedBy> artists;
+    List<Artist> artists;
     int discNumber;
     int durationMs;
     bool episode;
@@ -128,10 +139,9 @@ class Track {
     String href;
     String id;
     bool isLocal;
-    bool isPlayable;
     String name;
     int popularity;
-    String previewUrl;
+    dynamic previewUrl;
     bool track;
     int trackNumber;
     String type;
@@ -139,7 +149,7 @@ class Track {
 
     factory Track.fromJson(Map<String, dynamic> json) => Track(
         album: Album.fromJson(json["album"]),
-        artists: List<AddedBy>.from(json["artists"].map((x) => AddedBy.fromJson(x))),
+        artists: List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
         discNumber: json["disc_number"],
         durationMs: json["duration_ms"],
         episode: json["episode"],
@@ -149,10 +159,9 @@ class Track {
         href: json["href"],
         id: json["id"],
         isLocal: json["is_local"],
-        isPlayable: json["is_playable"],
         name: json["name"],
         popularity: json["popularity"],
-        previewUrl: json["preview_url"],
+        previewUrl: (json["preview_url"] == null) ? "" : json["preview_url"],
         track: json["track"],
         trackNumber: json["track_number"],
         type: json["type"],
@@ -177,36 +186,36 @@ class Album {
     });
 
     String albumType;
-    List<AddedBy> artists;
+    List<Artist> artists;
     ExternalUrls externalUrls;
     String href;
     String id;
-    List<Image> images;
+    List<ImageItem> images;
     String name;
-    dynamic releaseDate;
-    dynamic releaseDatePrecision;
+    String? releaseDate;
+    String? releaseDatePrecision;
     int totalTracks;
     String type;
     String uri;
 
     factory Album.fromJson(Map<String, dynamic> json) => Album(
         albumType: json["album_type"],
-        artists: List<AddedBy>.from(json["artists"].map((x) => AddedBy.fromJson(x))),
+        artists: List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
         externalUrls: ExternalUrls.fromJson(json["external_urls"]),
         href: json["href"],
         id: json["id"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images: List<ImageItem>.from(json["images"].map((x) => ImageItem.fromJson(x))),
         name: json["name"],
-        releaseDate: json["release_date"],
-        releaseDatePrecision: json["release_date_precision"],
+        releaseDate: (json["release_date"] == null) ? "" : json["release_date"],
+        releaseDatePrecision: (json["release_date_precision"] == null) ? "" : json["release_date_precision"],
         totalTracks: json["total_tracks"],
         type: json["type"],
         uri: json["uri"],
     );
 }
 
-class Image {
-    Image({
+class ImageItem {
+    ImageItem({
         required this.height,
         required this.url,
         required this.width,
@@ -216,7 +225,7 @@ class Image {
     String url;
     dynamic width;
 
-    factory Image.fromJson(Map<String, dynamic> json) => Image(
+    factory ImageItem.fromJson(Map<String, dynamic> json) => ImageItem(
         height: json["height"],
         url: json["url"],
         width: json["width"],
@@ -232,17 +241,5 @@ class ExternalIds {
 
     factory ExternalIds.fromJson(Map<String, dynamic> json) => ExternalIds(
         isrc: json["isrc"],
-    );
-}
-
-class VideoThumbnail {
-    VideoThumbnail({
-        this.url,
-    });
-
-    dynamic url;
-
-    factory VideoThumbnail.fromJson(Map<String, dynamic> json) => VideoThumbnail(
-        url: json["url"],
     );
 }

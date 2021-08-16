@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sirio_portfolio/main/core/theme.dart';
-import 'package:sirio_portfolio/main/spotify/blocs/playlist_bloc.dart';
-import 'package:sirio_portfolio/main/spotify/models/playlist_list_response.dart';
+
+import '../../core/theme.dart';
+import '../blocs/playlist_bloc.dart';
+import '../models/playlist_list_response.dart';
 
 
 class SpotifyLibraryScreen extends StatefulWidget {
@@ -80,13 +81,17 @@ class _SpotifyLibraryScreenState extends State<SpotifyLibraryScreen> {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       itemCount: list.items.length,
-      padding: EdgeInsets.only( top: 120, bottom: 70 ),
+      itemExtent: 80,
+      padding: const EdgeInsets.only( top: 120, bottom: 70 ),
       itemBuilder: ( context, int index ) {
     
-        return GestureDetector(
+        return InkWell(
           onTap: (){
-            // print(list.items[index].tracks.href);
-            Navigator.pushNamed(context, "/spotify_playlist");
+            Navigator.pushNamed(context, "/spotify_playlist",
+              arguments: <String, Playlist>{
+                "playlist": list.items[index]
+              }
+            );
           },
           child: _playlistItem(list, index)
         );

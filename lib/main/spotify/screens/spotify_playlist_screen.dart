@@ -1,10 +1,15 @@
-import 'dart:async';
-import 'dart:math' as math;
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sirio_portfolio/main/core/theme.dart';
-import 'package:sirio_portfolio/main/spotify/screens/sabt_helper.dart';
+import 'package:sirio_portfolio/main/core/const.dart';
+import 'package:sirio_portfolio/main/spotify/blocs/playlist_bloc.dart';
+import 'package:sirio_portfolio/main/spotify/models/playlist_items_response.dart';
+import 'package:sirio_portfolio/main/spotify/models/playlist_list_response.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../core/theme.dart';
+import 'sabt_helper.dart';
 
 
 class SpotifyPlaylistScreen extends StatefulWidget {
@@ -49,70 +54,145 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
     fontSize: 13,
   );
 
+  Playlist? _playlist;
+  AudioPlayer audioPlayer = AudioPlayer();
+  bool sound = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _playlist = null;
+  }
+
+  play( String url ) async {
+    if (url != "") {
+      int result = await audioPlayer.play(url);
+      if (result == 1 )
+        sound = true;
+      else 
+        showToast("Error, cannot reproduce");
+    } else 
+      showToast("Song unavailable");
+  }
+
+  _launchUrl( urlParameter ) async {
+    String url = urlParameter.toString();
+    if (url != "") {
+      if (await canLaunch(url))
+        await launch(url);
+      else 
+        showToast("Error, cannot reproduce");
+    } else 
+      showToast("Song unavailable");
+  }
+
+  showToast(String text) {
+    Fluttertoast.showToast(
+      msg: "$text",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.06
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      backgroundColor: AppColors.spotifyBlack,
-      body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [ sliverAppBar(), _sliverList() ],
-      ),
-   );
+    final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    _playlist = arguments["playlist"] as Playlist;
+
+    String endpoint = _playlist!.tracks.href.substring(23);
+    playlistBloc.fetchPlaylistItems( apiUrlSpotify, endpoint);
+
+    return StreamBuilder(
+      stream: playlistBloc.playlistItems,
+      builder: (BuildContext context, AsyncSnapshot<PlaylistItemsResponse> snapshot) {
+
+        if(snapshot.hasData) {
+          return Scaffold(
+            backgroundColor: AppColors.spotifyBlack,
+            body: CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: [ sliverAppBar(_playlist!, snapshot.data!), _sliverList(snapshot.data!) ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            backgroundColor: AppColors.spotifyBlack,
+            body: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric( horizontal: 20 ),
+              child: Text( "There has been an error. e: ${snapshot.error}" )
+            ),
+          );
+        }
+
+        return Center( child: CircularProgressIndicator( color: AppColors.spotifyGreen ) );
+      },
+    );
   }
 
-  _sliverList() {
+  _sliverList(PlaylistItemsResponse playlist) {
 
-      return  SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
+    return  SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
 
-            return ListTile(
-              leading: Image(
-                image: AssetImage("assets/no-image.jpg"),
-                height: 55,
-                width: 55,
-                fit: BoxFit.cover,
+          return ListTile(
+            leading: Image(
+              image: NetworkImage(
+              playlist.items[index].track.album.images.length > 0
+                ? playlist.items[index].track.album.images[0].url
+                : "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg"
               ),
-              title: Text(
-                "I Believe I'm Gonna Love You", 
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: _titleTrack
-              ),
-              subtitle: Text(
-                "Frank Sinatra", 
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: _subtitleTrack
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.more_vert, color: AppColors.spotifyGreyLighter),
-                onPressed: () {},
-              ),
-              onTap: () {},
-            );
-          },
-          childCount: 20,
-        ),
-      );
-    }
+              height: 55,
+              width: 55,
+              fit: BoxFit.cover,
+            ),
+            title: Text(
+              "${playlist.items[index].track.name}", 
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: _titleTrack
+            ),
+            subtitle: Text(
+              "${playlist.items[index].track.artists[0].name}", 
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: _subtitleTrack
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.more_vert, color: AppColors.spotifyGreyLighter),
+              onPressed: () {},
+            ),
+            onTap: () {
+              play(playlist.items[index].track.previewUrl);
+            },
+          );
+        },
+        childCount: playlist.items.length,
+      ),
+    );
+  }
 
-  SliverAppBar sliverAppBar() {
+  SliverAppBar sliverAppBar(Playlist _playlist, PlaylistItemsResponse playlist) {
     return SliverAppBar(
       pinned: true,
       floating: false,
       snap: false,
-      expandedHeight: 400, //!!! ATTENTION
+      expandedHeight: (_playlist.description == "") ? 350 : 400,
       backgroundColor: AppColors.spotifyBlueGrey,
       title: SABT(
-        child: Text("The Very Best In The Whole Universe", style: _titleAppBarPlaylist )
+        child: Text("${_playlist.name}", style: _titleAppBarPlaylist )
       ),
-      flexibleSpace: _flexibleSpaceBar()
+      flexibleSpace: _flexibleSpaceBar(_playlist, playlist)
     );
   }
 
-  FlexibleSpaceBar _flexibleSpaceBar() {
+  FlexibleSpaceBar _flexibleSpaceBar(Playlist playlistItem, PlaylistItemsResponse playlistTracks) {
     return FlexibleSpaceBar(
       collapseMode: CollapseMode.pin,
       centerTitle: true,
@@ -143,7 +223,11 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
                 Align(
                   alignment: Alignment.center,
                   child: Image(
-                    image: AssetImage("assets/no-image.jpg"),
+                    image: NetworkImage(
+                      playlistItem.images.length > 0
+                        ? playlistItem.images[0].url
+                        : "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg"
+                      ),
                     height: 180,
                     width: 180,
                     fit: BoxFit.cover,
@@ -151,19 +235,21 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
                 ),
                 SizedBox( height: 30, width: double.infinity, ),
                 Text(
-                  "The Very Best In The Whole Universe",
+                  "${playlistItem.name}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: _titlePlaylist,
                 ),
                 SizedBox( height: 20),
-                Text(
-                  "Huesca RAAZ DLTA STARS CSC TLG zG Busta nR ESL KmZ CtF FA",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: _descriptionPlaylist,
-                ),
-                SizedBox( height: 15 ),
+                (playlistItem.description == "") 
+                  ? Container()
+                  : Text(
+                      "${playlistItem.description}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: _descriptionPlaylist,
+                    ),
+                SizedBox( height: (playlistItem.description == "") ? 0 : 15 ),
                 Row(
                   children: [
 
@@ -180,7 +266,7 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
                     ),
                     SizedBox(width: 10),
                     Text( 
-                      "Sirio Rodriguez",
+                      "${playlistItem.owner.displayName}",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: _creatorPlaylist 

@@ -71,7 +71,7 @@ class PlaylistItemsApiProvider {
           prefs.setBool("spotify_logged", false);
           return Future.error(response.statusCode);
         }
-      } else if (response.statusCode == 200)
+      } else if (response.statusCode == 200) 
         return PlaylistItemsResponse.fromJson(json.decode(response.body));
       else
         return Future.error(response.statusCode);
