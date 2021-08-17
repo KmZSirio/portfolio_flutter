@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sirio_portfolio/main/core/theme.dart';
+import 'package:sirio_portfolio/main/spotify/blocs/top_bloc.dart';
+import 'package:sirio_portfolio/main/spotify/models/top_artists_response.dart';
 import 'package:sirio_portfolio/main/spotify/screens/spotify_screens.dart';
 
 class SpotifyHomeScreen extends StatefulWidget {
@@ -20,6 +22,12 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
   );
   
   int _stackIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    topBloc.fetchTopArtists();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,14 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
     );
   }
 
-  SizedBox _width20() => SizedBox(width: 20);
+  Row _title20width(String text) {
+    return Row(
+      children: [
+        SizedBox(width: 20),
+        Text( "$text", style: _titleStyle ),
+      ],
+    );
+  }
 
   Widget _navBar() {
 
@@ -139,44 +154,28 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                 
-                  Row(
-                    children: [
-                      _width20(),
-                      Text( "Good afternoon", style: _titleStyle ),
-                    ]
-                  ),
+                  _title20width("Good afternoon"),
                   SizedBox(height: 25),
                   Row(
                     children: [
-                      _width20(),
+                      SizedBox(width: 20),
                       _rowsAndColumn(size),
                     ]
                   ),
                   SizedBox(height: 35),
-                  Row(
-                    children: [
-                      _width20(),
-                      Text( "Show you might like", style: _titleStyle ),
-                    ]
-                  ),
+                  _title20width("Your top artists (last 6 months)"),
+                  SizedBox(height: 25),
+                  _slideArtists(),
+                  SizedBox(height: 25),
+                  _title20width("Show you might like"),
                   SizedBox(height: 25),
                   _slide( _slidePodcastItem() ),
                   SizedBox(height: 35),
-                  Row(
-                    children: [
-                      _width20(),
-                      Text( "Uniquely yours", style: _titleStyle ),
-                    ]
-                  ),
+                  _title20width("Uniquely yours"),
                   SizedBox(height: 25),
                   _slide( _slideYoursItem() ),
                   SizedBox(height: 35),
-                  Row(
-                    children: [
-                      _width20(),
-                      Text( "Recently played", style: _titleStyle ),
-                    ]
-                  ),
+                  _title20width("Recently played"),
                   SizedBox(height: 25),
                   _slide( _slideRecentlyItem() ),
                 
@@ -190,6 +189,39 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
     );
   }
 
+  Container _slideArtists() {
+    return Container(
+      height: 210,
+      child: StreamBuilder(
+        stream: topBloc.topArtists,
+        builder: (BuildContext context, AsyncSnapshot<TopArtistsResponse> snapshot) {
+          
+          if (snapshot.hasData) 
+            return ListView.builder(
+              itemCount: snapshot.data!.items.length,
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+              return _slideArtistItem(snapshot.data!.items[index]);
+             },
+            );
+          else if (snapshot.hasError) {
+            return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric( horizontal: 20 ),
+              child: Text( 
+                "There has been an error. e: ${snapshot.error}", 
+                style: TextStyle(color: Colors.white), 
+              )
+            );
+          }
+
+          return Center( child: CircularProgressIndicator( color: AppColors.spotifyGreen ) );
+        },
+      ),
+    );
+  }
+
   Container _slide( Container item ) {
     return Container(
       child: SingleChildScrollView(
@@ -198,7 +230,7 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
         child: Row(
           children: [
             
-            _width20(),
+            SizedBox(width: 20),
             item,
             SizedBox(width: 20),
             item,
@@ -241,6 +273,49 @@ class _SpotifyHomeScreenState extends State<SpotifyHomeScreen> {
               color: Colors.white,
               fontWeight: FontWeight.w900,
               fontSize: 13
+            ),
+          ),
+          
+        ]
+      ),
+    );
+  }
+
+  Container _slideArtistItem(Artists response) {
+    return Container(
+      width: 155,
+      height: 210,
+      margin: const EdgeInsets.only( left: 20 ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(0),
+            child: (response.images.length > 0)
+              ? Image(
+                  image: NetworkImage(response.images[0].url),
+                  height: 155,
+                  width: 155,
+                  fit: BoxFit.cover,
+                )
+              : Image(
+                  image: AssetImage("assets/spotify/no-artist.png"),
+                  height: 155,
+                  width: 155,
+                  fit: BoxFit.cover,
+                )
+          ),
+          SizedBox( height: 10 ),
+          Text(
+            "${response.name}",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 15
             ),
           ),
           

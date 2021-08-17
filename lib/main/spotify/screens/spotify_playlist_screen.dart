@@ -141,7 +141,10 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
             body: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric( horizontal: 20 ),
-              child: Text( "There has been an error. e: ${snapshot.error}" )
+              child: Text( 
+                "There has been an error. e: ${snapshot.error}", 
+                style: TextStyle(color: Colors.white), 
+              )
             ),
           );
         }

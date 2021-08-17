@@ -8,7 +8,8 @@ class AuthorizationApiProvider {
 
   static String _endpoint = "/authorize";
   static String responseType = "code";
-  static String scope = "playlist-read-private playlist-read-collaborative";
+  static String scope = 
+    "playlist-read-private playlist-read-collaborative user-top-read";
 
   String url = 
       "https://$accountsUrlSpotify$_endpoint" +

@@ -118,7 +118,7 @@ class SpotifyLoginScreen extends StatelessWidget {
         child: Stack(
           children: [
             Align(
-              child: Icon( icon, size: 20 ), 
+              child: Icon( icon, size: 20, color: Colors.white ), 
               alignment: Alignment.centerLeft,
             ),
             Align(
