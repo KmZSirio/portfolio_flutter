@@ -1,14 +1,18 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sirio_portfolio/main/core/const.dart';
-import 'package:sirio_portfolio/main/spotify/blocs/playlist_bloc.dart';
-import 'package:sirio_portfolio/main/spotify/models/playlist_items_response.dart';
-import 'package:sirio_portfolio/main/spotify/models/playlist_list_response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:platform/platform.dart';
+
+import '../../core/const.dart';
 import '../../core/theme.dart';
+import '../blocs/playlist_bloc.dart';
+import '../models/playlist_items_response.dart';
+import '../models/playlist_list_response.dart';
 import 'sabt_helper.dart';
 
 
@@ -58,6 +62,9 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
   AudioPlayer audioPlayer = AudioPlayer();
   bool sound = false;
 
+  // TODO Check out
+  //! Problem openning playlist with podcast episodes!
+
   @override
   void initState() {
     super.initState();
@@ -75,24 +82,33 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
       showToast("Song unavailable");
   }
 
-  _launchUrl( urlParameter ) async {
-    String url = urlParameter.toString();
-    if (url != "") {
-      if (await canLaunch(url))
-        await launch(url);
-      else 
-        showToast("Error, cannot reproduce");
-    } else 
-      showToast("Song unavailable");
+  void _launchApp(String url) async {
+    // com.spotify.music
+    String spotifyPackage = "com.spotify.music";
+    bool installed = await DeviceApps.isAppInstalled(spotifyPackage);
+    if (installed) {
+
+      if (LocalPlatform().isAndroid) {
+        AndroidIntent intent = AndroidIntent(
+            action: 'action_view',
+            data: '$url?'
+                'id=$spotifyPackage',
+        );
+        await intent.launch();
+      }
+
+    } else {
+      showToast("GET SPOTIFY FREE");
+    }
   }
 
   showToast(String text) {
     Fluttertoast.showToast(
       msg: "$text",
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.SNACKBAR,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: AppColors.spotifyGreen,
       textColor: Colors.white,
       fontSize: 16.06
     );
@@ -164,11 +180,17 @@ class _SpotifyPlaylistScreenState extends State<SpotifyPlaylistScreen> with Sing
               overflow: TextOverflow.ellipsis,
               style: _subtitleTrack
             ),
-            trailing: IconButton(
-              icon: Icon(Icons.more_vert, color: AppColors.spotifyGreyLighter),
-              onPressed: () {},
+            trailing: InkWell(
+              child: Image(
+                image: AssetImage("assets/spotify/icon_green.png"),
+                height: 30,
+                width: 30,
+              ),
+              onTap: () {
+                _launchApp(playlist.items[index].track.externalUrls.spotify);
+              },
             ),
-            onTap: () {
+            onTap: () async {
               play(playlist.items[index].track.previewUrl);
             },
           );

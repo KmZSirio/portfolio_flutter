@@ -39,7 +39,7 @@ class PlaylistItemsApiProvider {
 
         final newTokenResponse = await client.post( postUri, 
           body: {
-            "grant_type": "authorization_code",
+            "grant_type": "refresh_token",
             "refresh_token": refreshToken,
             "redirect_uri": redirectUri
           },
@@ -69,12 +69,12 @@ class PlaylistItemsApiProvider {
         } else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool("spotify_logged", false);
-          return Future.error(response.statusCode);
+          return Future.error("${response.statusCode}-${response.reasonPhrase}");
         }
       } else if (response.statusCode == 200) 
         return PlaylistItemsResponse.fromJson(json.decode(response.body));
       else
-        return Future.error(response.statusCode);
+        return Future.error("${response.statusCode}-${response.reasonPhrase}");
         
     } catch (e) {
       return Future.error(e);

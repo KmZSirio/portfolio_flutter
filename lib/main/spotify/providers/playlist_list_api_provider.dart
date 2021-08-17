@@ -10,11 +10,7 @@ import '../models/playlist_list_response.dart';
 
 class PlaylistListApiProvider {
   Client client = Client();
-
-  //TODO Check out, 
-  //! there was an 401 error first call on the morning
-  //! had to log again | renew token maybe
-
+  
   Future<PlaylistListResponse> fetchPlaylistList() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,7 +26,7 @@ class PlaylistListApiProvider {
             "Content-Type": "application/json",
             "Authorization": authorizationWithToken,
           });
-
+          
       if (response.statusCode == 401) {
         String refreshToken = prefs.getString("spotify_refresh_token")!;
         String _authorizationString = "$clientIdSpotify:$clientSecretSpotify";
@@ -43,13 +39,12 @@ class PlaylistListApiProvider {
 
         final newTokenResponse = await client.post( postUri, 
           body: {
-            "grant_type": "authorization_code",
+            "grant_type": "refresh_token",
             "refresh_token": refreshToken,
             "redirect_uri": redirectUri
           },
           headers: { "Authorization": _authorizationBasic }
         );
-
         if (newTokenResponse.statusCode == 200) {
           AuthorizationModel authModel = AuthorizationModel.fromJson(
             json.decode( newTokenResponse.body )
@@ -69,12 +64,12 @@ class PlaylistListApiProvider {
         } else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool("spotify_logged", false);
-          return Future.error(response.statusCode);
+          return Future.error("${response.statusCode}-${response.reasonPhrase}");
         }
       } else if (response.statusCode == 200) 
         return PlaylistListResponse.fromJson(json.decode(response.body));
       else 
-        return Future.error(response.statusCode);
+        return Future.error("${response.statusCode}-${response.reasonPhrase}");
       
     } catch (e) {
       return Future.error(e);
