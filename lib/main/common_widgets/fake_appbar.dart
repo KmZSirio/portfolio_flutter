@@ -7,7 +7,8 @@ Row fakeAppBar({
   required BuildContext context,
   required Size size,
   required String text,
-  bool showButton = true }) {
+  bool showButton = true,
+  bool buttonBorder = true }) {
 
     return Row(
       children: [
@@ -22,7 +23,9 @@ Row fakeAppBar({
               decoration: BoxDecoration(
                 color: AppColors.trans,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all( color: Theme.of(context).buttonColor, width: 1.5 )
+                border: (showButton == true && buttonBorder == true)
+                  ? Border.all( color: Theme.of(context).buttonColor, width: 1.5 )
+                  : Border.all( color: AppColors.trans, width: 1.5 )
               ),
             ),
           ) 

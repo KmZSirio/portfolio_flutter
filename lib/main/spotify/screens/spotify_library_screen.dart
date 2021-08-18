@@ -191,7 +191,10 @@ class _SpotifyLibraryScreenState extends State<SpotifyLibraryScreen> {
           Spacer(),
           Icon( Icons.search, size: 32 ),
           SizedBox(width: 20),
-          Icon( Icons.add, size: 32 )
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, "/spotify_create"),
+            child: Icon( Icons.add, size: 32 )
+          )
 
         ],
       ),

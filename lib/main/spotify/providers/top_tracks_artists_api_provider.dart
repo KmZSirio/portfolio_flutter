@@ -28,6 +28,7 @@ class TopTracksArtistsApiProvider {
             "Content-Type": "application/json",
             "Authorization": authorizationWithToken,
           });
+          
       if (response.statusCode == 401) {
         String refreshToken = prefs.getString("spotify_refresh_token")!;
         String _authorizationString = "$clientIdSpotify:$clientSecretSpotify";
@@ -46,6 +47,7 @@ class TopTracksArtistsApiProvider {
           },
           headers: { "Authorization": _authorizationBasic }
         );
+
         if (newTokenResponse.statusCode == 200) {
           AuthorizationModel authModel = AuthorizationModel.fromJson(
             json.decode( newTokenResponse.body )
@@ -58,7 +60,9 @@ class TopTracksArtistsApiProvider {
           String authorizationWithToken = "${authModel.tokenType} ${authModel.accessToken}";
 
           final response = await client
-            .get( Uri.https( apiUrlSpotify, "/v1/me/top/artists?limit=10" ),
+            .get( Uri.https( apiUrlSpotify, "/v1/me/top/artists", {
+              "limit": "10"
+              }),
               headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
