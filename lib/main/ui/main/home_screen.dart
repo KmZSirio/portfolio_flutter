@@ -34,17 +34,128 @@ class _HomeScreenState extends State<HomeScreen> {
 
               SettingsScreen(),
               _homePage(context),
-              Container(
-                color: Colors.blue,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+              _aboutPage(),
 
             ]
           ),
         )
       ),
    );
+  }
+
+  Container _aboutPage() {
+
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+            child: Text("Portfolio App",
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+          Divider(),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("First three apps",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("They only use Timer, and math calculations for bar weights.",
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Now playing app",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Uses TMDB API, multiple endpoints used.\nProvider as state management.",
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Spotify",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Uses Spotify API, user authentication with " +
+              "OAuth 2.0, multiple endpoints used, shared prefs used, most songs have a preview " +
+              "which can be reproduced. Also, there are intents to open Spotify App.\n" +
+              "Design almost the same as Official Spotify App.\n" +
+              "Bloc as state management and Streams for data from providers.",
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Settings",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Cubits and Shared Prefs used for Light/Dark modes.",
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          Spacer(flex: 2),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text("Repository on BitBucket, might move it to GitHub.",
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          Spacer(flex: 1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Text( "Made with",
+                style: TextStyle( fontSize: 24 ),
+              ),
+              SizedBox(width: 10),
+              FlutterLogo(
+                style: FlutterLogoStyle.horizontal,
+                size: 100,
+                textColor: Color(0xff115599),
+              ),
+            ]
+          ),
+
+        ],
+      ),
+    );
   }
 
   Theme _navBar() {
