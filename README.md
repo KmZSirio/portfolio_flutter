@@ -1,16 +1,16 @@
-# sirio_portfolio
+# Flutter Portfolio
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### First three apps
+They only use Timer, and math calculations for bar weights.
+### Now playing app
+ - TheMovieDB API.
+ - Multiple endpoints such as popular movies, search movies and now playing movies.
+ - Provider as state management.
+### Spotify
+ - Spotify API with OAuth 2.0.
+ - Multiple endpoints such as top tracks, user playlist lists and playlist tracks.
+ - Most songs have a preview listenable, also there's a botton with an intent for Spotify App.
+ - Bloc as state management and streams used for data flows.
+ - Design almost the same as the Official Spotify App.
+### Settings 
+Cubits and Shared Preferences for Light/Dark modes.
