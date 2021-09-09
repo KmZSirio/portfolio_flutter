@@ -14,6 +14,14 @@ class AuthorizationTokenApiProvider {
 
   String _authorizationBasic = "Basic " + base64Str;
 
+  //* Kotlin App Test
+  // static String _authKotlinString = ":";
+  // static var bytesKotlin = utf8.encode(_authKotlinString);
+  // static var base64StrKotlin = base64.encode(bytesKotlin);
+
+  // String _authorizationBasicKotlin = "Basic " + base64StrKotlin;
+  //
+
   Future<AuthorizationModel> fetchToken( String code ) async {
     
     try {
@@ -25,6 +33,14 @@ class AuthorizationTokenApiProvider {
         },
         headers: { "Authorization": _authorizationBasic }
       );
+      //* Kotlin App Test
+      // print("______________");
+      // print("$_authorizationBasicKotlin");
+      // print("______________");
+      // print("______________");
+      // print("$_authorizationBasic");
+      // print("______________");
+      // print("REQUEST: ${response.request}");
 
       if ( response.statusCode == 200 ) 
         return AuthorizationModel.fromJson(json.decode(response.body));
