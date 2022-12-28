@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const _isDarkMode = "isDarkMode";
 const _language   = "language";
+const _is35lbs   = "is35lbs";
 
 class PersistentStorageImpl extends PersistentStorageRepository {
 
@@ -29,6 +30,19 @@ class PersistentStorageImpl extends PersistentStorageRepository {
   Future<void> updateLanguage(int language) async {
     final preference = await SharedPreferences.getInstance();
     await preference.setInt( _language, language );
+    return;
+  }
+  
+  @override
+  Future<bool> is35lbs() async {
+    final preference = await SharedPreferences.getInstance();
+    return preference.getBool( _is35lbs ) ?? false;
+  }
+  
+  @override
+  Future<void> updateBarWeight(bool is35lbs) async {
+    final preference = await SharedPreferences.getInstance();
+    await preference.setBool( _is35lbs, is35lbs );
     return;
   }
 }

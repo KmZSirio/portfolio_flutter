@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -11,28 +11,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
-  intl: ^0.17.0
-  cupertino_icons: ^1.0.2
-  http: ^0.13.3
-  device_apps: ^2.1.1
-  android_intent_plus: ^1.0.2
-  url_launcher: ^6.0.9
-  flutter_web_auth: ^0.3.0
-  flutter_bloc: ^7.1.0
-  provider: ^5.0.0
-  rxdart: ^0.27.1
-  shared_preferences: ^2.0.6
-  font_awesome_flutter: ^9.1.0
-  flutter_card_swipper: ^0.4.0
-  google_fonts: ^2.1.0
-  animate_do: ^2.0.0
-  fluttertoast: ^8.0.8
-  wakelock: ^0.5.2
-  flutter_launcher_icons: ^0.9.0
-  audioplayers: ^0.19.1
+  # intl: ^0.17.0
+  cupertino_icons: ^1.0.5
+  flutter_bloc: ^8.1.1
+  shared_preferences: ^2.0.15
+  font_awesome_flutter: ^10.3.0
+  google_fonts: ^3.0.1
+  animate_do: ^3.0.2
+  fluttertoast: ^8.1.2
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -49,4 +37,3 @@ flutter:
 
   assets:
     - assets/
-    - assets/spotify/

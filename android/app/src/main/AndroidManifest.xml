@@ -20,7 +20,7 @@
     </queries>
 
    <application
-        android:label="Portfolio"
+        android:label="Calcular %'s"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
